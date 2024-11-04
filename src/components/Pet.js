@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Pet({pet}) {
+function Pet({pet, onAdoptPet}) {
 
   const { id, age, gender, name, type, weight, isAdopted } = pet
+
+  function handleAdoptClick() {
+    if (!isAdopted) {
+      onAdoptPet(id)
+    }
+  }
 
 
   return (
     <div className="card" data-testid="pet">
       <div className="content">
         <span className="header">
-          {/*'♀' OR '♂' */}
+          {gender === 'female' ? '♀' : '♂'}
           {name}
         </span>
         <div className="meta">
@@ -21,8 +27,7 @@ function Pet({pet}) {
         </div>
       </div>
       <div className="extra content">
-        <button className="ui disabled button">Already adopted</button>
-        <button className="ui primary button">Adopt pet</button>
+        <button className={isAdopted ? "ui disabled button" : "ui primary button"} onClick={handleAdoptClick} >{isAdopted ? 'Already adopted' : 'Adopt pet'}</button>
       </div>
     </div>
   );

@@ -23,6 +23,18 @@ function App() {
       .then(data => setPets(data))
   }
 
+  function adoptPet(id) {
+    setPets(pets.map(pet => {
+      if (pet.id === id) {
+        return {...pet, isAdopted: true}
+      } else {
+      return pet
+      }
+    }))
+  }
+
+  console.log(pets)
+
   return (
     <div className="ui container">
       <header>
@@ -34,7 +46,7 @@ function App() {
             <Filters onChangeType={changeType} onFindPetsClick={findPets}/>
           </div>
           <div className="twelve wide column">
-            <PetBrowser pets={pets}/>
+            <PetBrowser pets={pets} onAdoptPet={adoptPet}/>
           </div>
         </div>
       </div>
