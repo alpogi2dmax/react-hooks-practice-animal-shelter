@@ -5,7 +5,7 @@ import PetBrowser from "./PetBrowser";
 
 function App() {
   const [pets, setPets] = useState([]);
-  const [filters, setFilters] = useState({ type: "all" });
+  const [filters, setFilters] = useState("all");
 
   useEffect(() => {
     fetch('http://localhost:3001/pets')
@@ -13,6 +13,15 @@ function App() {
       .then(data => setPets(data))
   },[])
 
+  function changeType(type) {
+    setFilters(type)
+  }
+
+  function findPets() {
+    fetch(`http://localhost:3001/pets/${filters === 'all' ? '' : `?type=${filters}`}`)
+      .then(r => r.json())
+      .then(data => setPets(data))
+  }
 
   return (
     <div className="ui container">
@@ -22,7 +31,7 @@ function App() {
       <div className="ui container">
         <div className="ui grid">
           <div className="four wide column">
-            <Filters />
+            <Filters onChangeType={changeType} onFindPetsClick={findPets}/>
           </div>
           <div className="twelve wide column">
             <PetBrowser pets={pets}/>

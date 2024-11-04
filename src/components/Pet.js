@@ -4,7 +4,6 @@ function Pet({pet}) {
 
   const { id, age, gender, name, type, weight, isAdopted } = pet
 
-  console.log(pet)
 
   return (
     <div className="card" data-testid="pet">
